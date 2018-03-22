@@ -1,0 +1,161 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<style>
+		*{
+			margin: 0;
+			padding: 0;
+			list-style: none;
+		}
+
+		ul{
+			width: 100%;
+            /*background-color: orange;*/
+		}
+        
+
+        li:nth-child(odd){
+
+        	color:purple;
+        	font-family: "宋体";
+        	font-weight: 20px;
+        	text-align: left;
+        }
+
+        li:nth-child(even){
+
+        	color: cyan;
+        	font-family: "黑体";
+        	font-weight: 10px;
+        	text-align: right;
+
+
+        }
+
+
+		</style>
+	</head>
+	
+	<body>
+
+		<ul>
+
+		</ul>
+
+		<input type="text">
+		<button onclick="sendMsg()">发送</button>
+
+	</body>
+
+	   <script>
+        
+        //ul
+
+        var ulEle =  document.querySelector("ul");
+
+        var inp = document.querySelector("input")
+        
+        function sendMsg(){
+
+            var xml;
+        	if(window.XMLHttpRequest){
+
+              xml = new XMLHttpRequest();
+        	}else{
+
+        		xml = new ActiveXObject("Microsoft.XMLHTTP");
+        	}
+           //输入框的内容
+        	var txt = inp.value;
+
+        	var li = document.createElement("li");
+
+        	li.innerText = txt;
+
+        	ulEle.appendChild(li);
+
+        	inp.value = "";
+
+
+
+        	xml.open("GET","https://way.jd.com/turing/turing?info="+txt+"&loc=北京市海淀区信息路28号&userid=222&appkey=c5181369709761c7a0f85e8a2049707b",true);
+        	xml.send();
+        	//POST
+           // xml.open("POST","https://way.jd.com/turing/turing",true);
+          
+           //设置头部
+           // xml.setRequestHeader("Content-type","application/x-www-form-urlencoded;charset=utf-8");
+           //gif
+           // xml.setRequestHeader("Content-type","image/gif");
+
+           //img  jpg
+           // xml.setRequestHeader("Content-type","application/x-img");
+           // xml.setRequestHeader("Content-type","application/x-jpg");
+            
+           //MP4
+            // xml.setRequestHeader("Content-type","video/mpeg4");
+           
+           //MP3
+            // xml.setRequestHeader("Content-type","audio/mp3");
+
+
+
+           // xml.setRequestHeader("Refresh","5")
+
+           // Content-Length  内容长度
+
+           // Date   日期时间
+
+           //Expires  过期时间
+
+           //Refresh  刷新时间
+
+// 服务器常见状态码
+// 200 - 请求成功
+// 301 - 资源（网页等）被永久转移到其它URL
+// 404 - 请求的资源（网页等）不存在
+// 500 - 内部服务器错误
+// 414 - 请求的URI过长（URI通常为网址），服务器无法处理
+
+            
+            //post 请求参数
+        	// xml.send("info="+txt+"&loc=北京市海淀区信息路28号&userid=222&appkey=c5181369709761c7a0f85e8a2049707b");
+ 
+
+        	xml.onreadystatechange=function(){
+               
+               if(this.readyState == 4 && this.status == 200){
+
+               	console.log(this.responseText)
+              // {charge: false, code: "10000", msg: "查询成功", result: {code: 100000, text: "男生，妥妥的。"}}
+               	   var res = JSON.parse(this.responseText);
+                    
+                   // 回复的消息
+                    var text = res.result.text;
+
+
+                    var li = document.createElement("li");
+
+                    li.innerText = text;
+
+                    ulEle.appendChild(li);
+
+                    // console.log(this.getRequestHeader("Last-Modified"));
+
+               	   
+               }
+
+        	}
+
+
+        }
+
+
+
+
+
+
+
+	   </script>
+</html>

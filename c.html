@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			*{
+				margin: 0;
+				padding: 0;
+				list-style: none;
+			}
+			ul{
+				width: 100%;
+				
+			}
+			li:nth-child(odd){
+				color: palevioletred;
+				font-family: "宋体";
+				font-weight: 20px;
+        		text-align: left;
+			}
+			  li:nth-child(even){
+
+        	color: cyan;
+        	font-family: "黑体";
+        	font-weight: 10px;
+        	text-align: right;
+
+
+        }
+		</style>
+	</head>
+	<body>
+		<ul>
+			
+		</ul>
+		<input type="text" />
+		<button onclick="sendMsg()">发送</button>
+	</body>
+	<script>
+		var ulele=document.querySelector("ul")
+		var inp=document.querySelector("input")
+		
+		function sendMsg(){
+			//初始化
+		var xhr;
+		if(window.XMLHttpRequest){
+			xhr=new XMLHttpRequest();
+		}else if(window.ActiveXObject){
+			xhr=new ActiveXObject("Microsoft.XMLHTTP")
+		}
+		
+		//输入框的内容
+		var txt=inp.value;
+		var li=document.createElement("li")
+		li.innerText=txt;
+		ulele.appendChild(li);
+		inp.value="";
+		
+		
+		
+		xhr.open("GET","https://way.jd.com/turing/turing?info="+txt+"&loc=北京市海淀区信息路28号&userid=222&appkey=2de023df88b96fd9762dd621ca2745be",true)
+		xhr.send(null)
+		
+		xhr.onreadystatechange=function(){
+			if(xhr.readyState==4&&xhr.status==200){
+				var aa=JSON.parse(xhr.responseText)
+				var text=res.result.text;
+				
+				var li=document.createElement("li")
+				li.innerHTML=text;
+				ulele.appendChild(li)
+				
+				}
+			}
+		}
+		
+	</script>
+</html>
